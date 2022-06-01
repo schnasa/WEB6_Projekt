@@ -1,0 +1,93 @@
+<div *ngIf="!isLoggedIn()">
+  <h1>Anmeldung</h1>
+  <form class="ui large form" [formGroup]="loginForm">
+    <div class="field">
+      <label>E-Mail</label>
+      <input type="email" id="username" formControlName="username">
+      <div *ngIf="loginForm.get('username')?.invalid && (loginForm.get('username')?.dirty ||
+        loginForm.get('username')?.touched) &&
+        loginForm.get('username')?.hasError('required')" class="ui negative
+        message">Benutzername ist verpflichtend!
+      </div>
+      <div *ngIf="loginForm.get('username')?.invalid &&
+        (loginForm.get('username')?.dirty ||
+        loginForm.get('username')?.touched) &&
+        loginForm.get('username')?.hasError('email')" class="ui negative
+        message">E-Mail Format überprüfen!
+      </div>
+    </div>
+    <div class="field">
+      <label>Passwort</label>
+      <input type="password" formControlName="password">
+      <div *ngIf="loginForm.get('password')?.invalid &&
+        (loginForm.get('password')?.dirty ||
+        loginForm.get('password')?.touched)" class="ui negative message">Passwort ist verpflichtend
+      </div>
+    </div>
+    <button type="submit" (click)="login('nachhilfegeber')" class="ui button green" [disabled]="loginForm.invalid">
+      Anmelden
+      als Nachhilfe - LEHRER
+    </button>
+    <button type="submit" (click)="login('suchender')" class="ui button blue" [disabled]="loginForm.invalid">Anmelden
+      als Nachhilfe - SUCHENDER
+    </button>
+  </form>
+</div>
+
+<!--Eingeloggte Ansicht -->
+<div *ngIf="isLoggedIn()">
+
+  <h1 *ngIf="authService.isAdmin()">Du bist angemeldet als Nachhilfe - Lehrer{{ nachhilfegeber?.firstName }}</h1>
+  <h1 *ngIf="!authService.isAdmin()">Du bist angemeldet als Nachhilfe - Suchender{{ nachhilfegeber?.firstName }}</h1>
+
+  <h3>Suche nach passende Angebote für dich!</h3>
+  <a routerLink="../lvas" class="ui red button">
+    Alle Angebote ansehen
+  </a>
+  <h3>Oder log dich wieder aus!</h3>
+  <button type="button" class="ui button"
+          (click)="logout()">Logout
+  </button>
+
+  <br/>
+  <br/>
+  <br/>
+
+  <!--Termine Suchender -->
+  <div *ngIf="!authService.isAdmin()">
+    <h3>Deine Termine</h3>
+    <div>
+      <div *ngFor="let lva of lvas">
+        <div *ngFor="let termin of lva.termins; last as l">
+          <span *ngIf="termin.suchender_id">{{ termin.date }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--Termine Nachhilfegeber -->
+  <div *ngIf="authService.isAdmin()">
+    <div>
+      <h3>Deine Termine</h3>
+      <div>
+        <div *ngFor="let lva of lvas">
+          <div *ngFor="let termin of lva.termins; last as l">
+            <span *ngIf="termin.suchender_id">{{ termin.date }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <h3>Neue Terminvorschläge</h3>
+      <div>
+
+        <div *ngFor="let ersatztermin of ersatztermins">
+            <span *ngIf="ersatztermin.nachhilfegeber_id">{{ ersatztermin.date }}</span>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</div>
+

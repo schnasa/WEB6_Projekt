@@ -1,0 +1,12 @@
+<div class="ui card">
+
+    <div class="content column center aligned row">
+      <div class="header">{{ lva?.name }}</div>
+      <div class="level"> {{ lva?.level }} </div>
+      <!----<span *ngFor="let termin of lva?.termins; last as 1">
+        {{termin.Date}} <span *ngIf="!1">, </span>
+      </span>--->
+      <div class="nachhilfegeber"> {{ lva?.nachhilfegeber?.firstName }} {{ lva?.nachhilfegeber?.lastName }} </div>
+    </div>
+
+</div>

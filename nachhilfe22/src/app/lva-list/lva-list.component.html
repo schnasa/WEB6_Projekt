@@ -1,0 +1,12 @@
+<div class="ui middle aligned selection divided list">
+  <a *ngFor="let lva of lvas" class="item bs-lva-list-item"
+     [lva]="lva"
+     [routerLink]="lva.id.toString()"></a>
+  <div *ngIf="!lvas" class="ui active dimmer">
+    <div class="ui large text loader">Daten werden geladen...</div>
+  </div>
+  <p *ngIf="lvas && !lvas.length">Es wurden noch keine Angebote
+    eingetragen.</p>
+</div>
+
+

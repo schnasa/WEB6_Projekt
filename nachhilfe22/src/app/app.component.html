@@ -1,0 +1,12 @@
+<div class="ui {{isLoggedIn()?'four':'three'}} item tabs menu">
+  <a routerLink="home" routerLinkActive="active" class="item">Home</a>
+  <a routerLink="lvas" routerLinkActive="active" class="item">Angebote</a>
+  <a *ngIf="isLoggedIn() && authService.isAdmin()" routerLink="admin" routerLinkActive="active"
+  class="item">Neues Angebot</a>
+  <a routerLink="login" routerLinkActive="active"
+     class="item">{{getLoginLabel()}}</a>
+</div>
+<div class="content">
+  <router-outlet></router-outlet>
+</div>
+

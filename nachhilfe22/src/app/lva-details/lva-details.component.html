@@ -1,0 +1,65 @@
+<div class="ui grid" *ngIf="lva">
+  <div class="twelve wide column">
+    <h1 class="ui header">{{ lva.name }}</h1>
+    <h3 class="ui header">Level: {{ lva.level }}</h3>
+    <p class="name">Lehrer: {{ lva?.nachhilfegeber?.firstName }} {{ lva?.nachhilfegeber?.lastName }}</p>
+    <div class="ui divider"></div>
+    <div class="ui grid">
+      <div class="four wide column">
+        <h4 class="ui header">Termine</h4>
+        <div *ngFor="let termin of lva.termins; last as l">
+          <div *ngIf="!termin.suchender_id">
+            {{ termin.date }}<span *ngIf="!l">, </span>
+            <!--Buchen Button-->
+            <button *ngIf="authService.isLoggedIn() && !authService.isAdmin()" class="ui yellow button"
+                    (click)="book(termin)">
+              Angebot buchen!
+            </button>
+          </div>
+        </div>
+      </div>
+      <br/>
+      <br/>
+      <div class="sixteen wide column">
+        <h3 class="ui header">Beschreibung</h3>
+        {{ lva.description }}
+      </div>
+    </div>
+    <br/>
+    <br/>
+    <button [routerLink]="'/lvas'" class="ui red button">Zurück zur Übersicht</button>
+
+    <button *ngIf="authService.isLoggedIn() && authService.isAdmin()" class="ui tiny red labeled icon button"
+            (click)="removeLva()">Angebot löschen
+    </button>
+
+    <a *ngIf="authService.isLoggedIn() && authService.isAdmin()" class="ui tiny yellow labeled icon button"
+       [routerLink]="['../../admin', lva?.id]">
+      <i class="write icon"></i> Angebot bearbeiten
+    </a>
+
+    <br/>
+    <br/>
+    <br/>
+    <!--neuer Termin-->
+    <form [formGroup]="messageForm" (ngSubmit)="submitForm()"
+          *ngIf="authService.isLoggedIn() && !authService.isAdmin()">
+      <div class="field">
+        <label>Neuer Terminevorschlag</label>
+        <div>
+          <input type="hidden" formControlName="id">
+          <input type="hidden" formControlName="suchender_id">
+          <input type="hidden" formControlName="nachhilfegeber_id">
+          <div class="nine wide field">
+            <input type="date" formControlName="date">
+          </div>
+        </div>
+        <div class="one wide field">
+          <button class="ui blue button" type="submit">
+            neuer Termin absenden
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
