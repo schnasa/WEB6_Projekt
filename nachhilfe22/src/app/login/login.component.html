@@ -1,4 +1,4 @@
-<div *ngIf="!isLoggedIn()">
+<div *ngIf="!isLoggedIn()" class="ui main container" class="ui main container">
   <h1>Anmeldung</h1>
   <form class="ui large form" [formGroup]="loginForm">
     <div class="field">
@@ -35,7 +35,7 @@
 </div>
 
 <!--Eingeloggte Ansicht -->
-<div *ngIf="isLoggedIn()">
+<div *ngIf="isLoggedIn()" class="ui main container">
 
   <h1 *ngIf="authService.isAdmin()">Du bist angemeldet als Nachhilfe - Lehrer{{ nachhilfegeber?.firstName }}</h1>
   <h1 *ngIf="!authService.isAdmin()">Du bist angemeldet als Nachhilfe - Suchender{{ nachhilfegeber?.firstName }}</h1>
@@ -65,6 +65,7 @@
     </div>
   </div>
 
+
   <!--Termine Nachhilfegeber -->
   <div *ngIf="authService.isAdmin()">
     <div>
@@ -77,6 +78,11 @@
         </div>
       </div>
     </div>
+
+    <br/>
+    <br/>
+    <br/>
+
     <div>
       <h3>Neue Terminvorschläge</h3>
       <div>

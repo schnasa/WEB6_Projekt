@@ -1,43 +1,44 @@
-<h1>Lehrangebots-Formular</h1>
-<p>Erstelle oder bearbeite deine Angebote.</p>
-<form class="ui large form" [formGroup]="lvaForm"
-      (ngSubmit)="submitForm()">
-  <input type="hidden" formControlName="id">
-  <div class="field">
-    <label>Name des Angebot</label>
-    <input formControlName="name">
-    <div *ngIf="errors['name']" class="ui negative message"> {{ errors['name'] }}</div>
-  </div>
-  <div class="field">
-    <label>Level</label>
-    <input formControlName="level">
-  </div>
-  <div class="field" [class.disabled]="isUpdatingLva">
-    <label>ID</label>
+<div class="ui main container">
+  <h1>Lehrangebots-Formular</h1>
+  <p>Erstelle oder bearbeite deine Angebote.</p>
+  <form class="ui large form" [formGroup]="lvaForm"
+        (ngSubmit)="submitForm()">
     <input type="hidden" formControlName="id">
-    <div *ngIf="errors['id']" class="ui negative message">
-      {{errors['id']}}</div>
-  </div>
-  <div class="field">
-    <label>Termine</label>
-    <div formArrayName="termin">
-      <div class="field" *ngFor="let control of termin?.controls; index as i; last as l" [formGroupName]="i">
-        <input type="hidden" formControlName="id">
-        <div class="nine wide field">
-          <input type="date" formControlName="date">
+    <div class="field">
+      <label>Name des Angebot</label>
+      <input formControlName="name">
+      <div *ngIf="errors['name']" class="ui negative message"> {{ errors['name'] }}</div>
+    </div>
+    <div class="field">
+      <label>Level</label>
+      <input formControlName="level">
+    </div>
+    <div class="field" [class.disabled]="isUpdatingLva">
+      <label>ID</label>
+      <input type="hidden" formControlName="id">
+      <div *ngIf="errors['id']" class="ui negative message">
+        {{errors['id']}}</div>
+    </div>
+    <div class="field">
+      <label>Termine</label>
+      <div formArrayName="termin">
+        <div class="field" *ngFor="let control of termin?.controls; index as i; last as l" [formGroupName]="i">
+          <input type="hidden" formControlName="id">
+          <div class="nine wide field">
+            <input type="date" formControlName="date">
+          </div>
         </div>
       </div>
+      <div class="one wide field">
+        <button (click)="addThumbnailControl()" class="ui large button"
+                type="button">+
+        </button>
+      </div>
     </div>
-    <div class="one wide field">
-      <button (click)="addThumbnailControl()" class="ui large button"
-              type="button">+
-      </button>
+    <div class="field">
+      <label>Beschreibung</label>
+      <input formControlName="description">
     </div>
-  </div>
-  <div class="field">
-    <label>Beschreibung</label>
-    <input formControlName="description">
-  </div>
-  <button type="submit" class="ui button" [disabled]="lvaForm.invalid">Speichern</button>
-</form>
-
+    <button type="submit" class="ui button" [disabled]="lvaForm.invalid">Speichern</button>
+  </form>
+</div>
